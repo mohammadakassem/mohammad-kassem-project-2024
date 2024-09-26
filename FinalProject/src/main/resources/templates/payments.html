@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>User Payments</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  <style>
+    body {
+        background: url('https://blog.way.com/wp-content/uploads/2021/09/Spooky-abandoned-parking-lot-1-scaled.jpeg') no-repeat center center fixed;
+        background-size: cover;
+        animation: backgroundAnimation 20s linear infinite;
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    @keyframes backgroundAnimation {
+        0% { background-position: 0% 0%; }
+        100% { background-position: 100% 0%; }
+    }
+
+    .container {
+        max-width: 700px; /* Reduced width for smaller card */
+        margin: 70px auto;
+        padding: 20px; /* Reduced padding */
+        background-color: rgba(255, 255, 255, 0.8); /* Increased transparency */
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        animation: float 3s ease-in-out infinite; /* Floating animation */
+        opacity: 0.8; /* Reduced opacity */
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+
+    h1 {
+        font-size: 26px; /* Reduced font size */
+        color: #333;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 16px;
+        color: #333;
+    }
+
+    table, th, td {
+        border: 1px solid #ddd;
+        padding: 12px 15px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    td {
+        background-color: #fafafa;
+    }
+
+    tr:nth-child(even) td {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover td {
+        background-color: #f1f1f1;
+    }
+
+    .total-row {
+        font-weight: bold;
+        background-color: #e2f3e8;
+        color: #333;
+    }
+
+    .empty-message {
+        text-align: center;
+        font-size: 18px;
+        color: #777;
+    }
+     .back-home {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4a4a4a;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .back-home:hover {
+            background-color: #3a3a3a;
+        }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>User Payments</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>Amount</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="payment : ${payments}">
+      <td th:text="${payment.amount}"></td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(payments)}" class="empty-message">
+      <td colspan="1">No payments found.</td>
+    </tr>
+    <tr class="total-row">
+      <td>Total: <span th:text="${totalPayments}"></span></td>
+    </tr>
+    </tbody>
+
+  </table>
+  <a href="/dashboard" class="back-home">Back to Home</a> <!-- Link to your home page -->
+</div>
+</body>
+</html>

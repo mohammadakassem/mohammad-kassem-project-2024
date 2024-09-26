@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Area</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: url("https://png.pngtree.com/background/20230611/original/pngtree-empty-parking-garage-at-night-picture-image_3156725.jpg") no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .form-container {
+      background: rgba(255, 255, 255, 0.6); /* Slightly transparent white */
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 50px;
+      max-width: 700px; /* Increased width */
+      margin: auto;
+      position: relative;
+      overflow: hidden;
+      animation: glow 1.5s infinite alternate;
+    }
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+      }
+      100% {
+        box-shadow: 0 0 20px rgba(40, 167, 69, 1);
+      }
+    }
+    h1 {
+      color: black;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+      color: #333;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      transition: border-color 0.3s;
+    }
+    input:focus, textarea:focus {
+      border-color: #007BFF;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      outline: none;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+    }
+    button:hover {
+      background-color: #218838;
+      box-shadow: 0 10px 20px rgba(40, 167, 69, 0.5);
+    }
+    .cancel-button {
+      text-decoration: none;
+      color: #007BFF;
+      margin-top: 10px;
+      display: inline-block;
+      font-weight: bold;
+      text-align: center;
+    }
+    .cancel-button:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <h1>Edit Area</h1>
+
+  <form th:action="@{/areas/{id}(id=${area.id})}" method="post">
+    <input type="hidden" name="_method" value="put" />
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" th:value="${area.name}" required />
+
+    <label for="location">Location:</label>
+    <input type="text" id="location" name="location" th:value="${area.location}" required />
+
+    <label for="openingTime">Opening Time:</label>
+    <input type="datetime-local" id="openingTime" th:field="*{area.openingTime}" required />
+
+    <label for="closingTime">Closing Time:</label>
+    <input type="datetime-local" id="closingTime" th:field="*{area.closingTime}" required />
+
+    <label for="image">Image URL:</label>
+    <input type="text" id="image" name="image" th:value="${area.image}" required />
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" th:text="${area.description}" required></textarea>
+
+    <button type="submit">Update Area</button>
+  </form>
+
+  <a href="/areas" class="cancel-button">Cancel</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservation Areas</title>
+  <style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(135deg, #a8edea, #fed6e3);
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    h1 {
+        color: #333;
+        font-size: 3em;
+        margin-bottom: 30px;
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    }
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+    .card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+      .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+
+    .reserve-btn {
+        padding: 10px 15px;
+        background-color: #4a4a4a;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        display: inline-block;
+    }
+    .reserve-btn:hover {
+        background-color: #3a3a3a;
+    }
+        .back-home {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4a4a4a;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .back-home:hover {
+            background-color: #3a3a3a;
+        }
+  </style>
+</head>
+<body>
+
+<h1>Reservation Areas</h1>
+<div class="card-container">
+  <div class="card" th:each="area : ${areas}">
+    <img th:src="${area.image}" alt="Area Image">
+    <h2 th:text="${area.name}">Area Name</h2>
+
+    <p><strong>Location:</strong> <span th:text="${area.location}"></span></p>
+    <p><strong>Opening Time:</strong> <span th:text="${#temporals.format(area.openingTime, 'yyyy-MM-dd hh:mm a')}"></span></p>
+    <p><strong>Closing Time:</strong> <span th:text="${#temporals.format(area.closingTime, 'yyyy-MM-dd hh:mm a')}"></span></p>
+    <p><strong>Total Spots:</strong> <span th:text="${area.totalSpots}"></span></p>
+    <a th:href="@{/api/reservations/reserve(id=${area.id})}" class="reserve-btn">Reserve</a>
+
+  </div>
+
+</div>
+<a href="/dashboard" class="back-home">Back to Home</a> <!-- Link to your home page -->
+</body>
+</html>

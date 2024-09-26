@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+  <style>
+    body {
+      background-image: url('https://images.pexels.com/photos/1756957/pexels-photo-1756957.jpeg');
+      background-size: cover;
+      background-position: center;
+      font-family: 'Arial', sans-serif;
+    }
+    .feedback-card {
+      background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 600px; /* Limit the width of the card */
+      transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+    }
+    .feedback-card:hover {
+      transform: translateY(-5px); /* Slightly lift the card on hover */
+      box-shadow: 0 8px 40px rgba(0,0,0,0.3); /* Enhanced shadow on hover */
+    }
+    .submit-btn {
+      background-color: #007bff;
+      color: white;
+    }
+    .submit-btn:hover {
+      background-color: #0056b3;
+    }
+    .home-btn {
+      background-color: #28a745;
+      color: white;
+    }
+    .home-btn:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1 class="text-white mt-4 text-center">Feedback Form</h1>
+
+  <!-- Feedback Message Section -->
+  <div th:if="${message}" class="alert alert-success" role="alert" th:text="${message}" style="opacity: 0;"></div>
+
+  <div class="feedback-card">
+    <form th:action="@{/feedback}" th:object="${feedback}" method="post">
+      <div class="mb-3">
+        <label for="message" class="form-label">Message</label>
+        <textarea th:field="*{message}" class="form-control" id="message" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="btn submit-btn">Submit Feedback</button>
+    </form>
+    <a th:href="@{/dashboard}" class="btn home-btn mt-3">Go Home</a>
+  </div>
+</div>
+
+<script>
+  // Show success alert and redirect to home after submission
+  const urlParams = new URLSearchParams(window.location.search);
+  const alert = document.querySelector('.alert');
+  if (urlParams.has('success')) {
+    alert.style.opacity = '1'; // Show success alert
+    setTimeout(() => {
+      window.location.href = '/dashboard'; // Redirect to home after 3 seconds
+    }, 3000); // Change 3000 to your desired duration in milliseconds
+  }
+</script>
+</body>
+</html>

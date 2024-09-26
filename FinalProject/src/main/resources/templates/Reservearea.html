@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Reserve Parking Spot</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  <style>
+    body {
+        background-image: url('https://img.freepik.com/free-photo/empty-parking-lot_1127-3298.jpg?t=st=1727105906~exp=1727109506~hmac=7bc85ca5fcc1182f7632a38a459ceead8a935732d420ab5b5823f6765845c228&w=1060');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        width: 400px;
+        animation: fadeIn 1s;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        box-shadow: 0 0 10px rgba(0, 123, 255, 0.6);
+    }
+
+    .alert {
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .alert-danger {
+        background-color: rgba(255, 0, 0, 0.1);
+        color: #d9534f;
+    }
+
+    .alert-success {
+        background-color: rgba(0, 255, 0, 0.1);
+        color: #5cb85c;
+    }  .back-home {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4a4a4a;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .back-home:hover {
+            background-color: #3a3a3a;
+        }
+
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Reserve Parking Spot</h1>
+
+  <form th:action="@{/api/reservations/reserve}" th:object="${reservationRequest}" method="post">
+    <input type="hidden" name="userId" th:value="${userId}" />
+
+    <div class="form-group">
+      <label for="area">Select Area:</label>
+      <select th:field="*{areaId}" id="area" name="areaId" class="form-control" required>
+        <option value="" disabled selected>Select Area</option>
+        <option th:each="area : ${areas}" th:value="${area.id}" th:text="${area.name}"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="startTime">Start Time:</label>
+      <input type="datetime-local" th:field="*{startTime}" id="startTime" name="startTime" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label for="endTime">End Time:</label>
+      <input type="datetime-local" th:field="*{endTime}" id="endTime" name="endTime" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Reserve Spot</button>
+    <a href="/reservation" class="back-home">Back to Home</a> <!-- Link to your home page -->
+  </form>
+
+  <div th:if="${errorMessage != null}" class="alert alert-danger">
+    <p th:text="${errorMessage}"></p>
+  </div>
+
+  <div th:if="${successMessage != null}" class="alert alert-success">
+    <p th:text="${successMessage}"></p>
+
+  </div>
+</div>
+</body>
+</html>
